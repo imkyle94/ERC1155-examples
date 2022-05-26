@@ -4,6 +4,9 @@ ERC1155 사용 예제를 제공합니다.
 ###
 나의 경우 블록체인 코어 & 메인넷 개발자를 목표로 하고 있기 때문에(코인 발행에 당당히 내 이름을 넣고 싶다.)
 
+### ERC ?
+Ethereum-Request for Comment 인데 단어 자체를 꼭 이해할 필요는 없을 거 같고, 이더리움 내의 인터페이스 혹은 메서드 정도라고만 이해해도 될 듯 하다.
+
 ### ERC vs IERC ?
 IERC is the Interface for the token contract.
 ERC is the implementation of the token contract.
