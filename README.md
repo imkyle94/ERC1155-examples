@@ -23,6 +23,12 @@ Interface를 굳이 왜 따로 제시하냐에 대한 질문에는 다음과 같
 
 그렇다면 다음 내용을 좀 더 이어가 본다.
 
+### ERC와 ERC extension의 차이는 무엇인가요?
+공식 문서보다 깃허브 코드를 보는 것이 더 직관적일 듯하다.
+[openzeppelin-contracts](https://github.com/OpenZeppelin/openzeppelin-contracts)
+extension에서 코드의 변경점들을 확인할 수 있다.
+다양한 허브들이 제시되고 있으니 꼭 확인할 것!
+
 ###
 나 저 사람에 대한 정보를 알고 싶어요. 라고 한다면,
 그래 그 사람 이름 알아와서 너가 적어 알아봐줄게. 가 가장 낮은 단계일 것이고
