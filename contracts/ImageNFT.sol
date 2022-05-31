@@ -1,9 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
+import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Supply.sol";
+import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155URIStorage.sol";
 
-contract ImageNFT is ERC721URIStorage {
+contract A is ERC1155Supply, ERC1155URIStorage {
   enum Status {
     OffBid,
     OnBid,
@@ -29,8 +31,29 @@ contract ImageNFT is ERC721URIStorage {
 
   mapping(string => bool) internal tokenURIExists;
 
-  constructor() ERC721("Image Collection", "NFT") {
-    currentImageCount = 0;
+  constructor() ERC1155("NFT") {}
+
+  function _beforeTokenTransfer(
+    address operator,
+    address from,
+    address to,
+    uint256[] memory ids,
+    uint256[] memory amounts,
+    bytes memory data
+  ) internal virtual override(ERC1155, ERC1155Supply) {
+    super._beforeTokenTransfer(operator, from, to, ids, amounts, data);
+  }
+
+  function uri(uint256 tokenId)
+    public
+    view
+    virtual
+    override(ERC1155, ERC1155URIStorage)
+    returns (string memory)
+  {
+    // string memory tokenURI = _tokenURIs[tokenId];
+    // If token URI is set, concatenate base URI and tokenURI (via abi.encodePacked).
+    // return bytes(tokenURI).length > 0 ? string(abi.encodePacked(_baseURI, tokenURI)) : super.uri(tokenId);
   }
 
   function mint(
@@ -39,11 +62,11 @@ contract ImageNFT is ERC721URIStorage {
     string memory _tokenURI
   ) internal returns (uint256) {
     currentImageCount++;
-    require(!_exists(currentImageCount), "ImageID repeated.");
+    require(!exists(currentImageCount), "ImageID repeated.");
     require(!tokenURIExists[_tokenURI], "Token URI repeated.");
 
-    _safeMint(to, currentImageCount);
-    _setTokenURI(currentImageCount, _tokenURI);
+    _mint(to, currentImageCount, 1, "1");
+    _setURI(currentImageCount, _tokenURI);
 
     //새 NFT(구조체)를 만들고 새 값을 전달합니다.
     Image memory newImage = Image(
@@ -68,7 +91,7 @@ contract ImageNFT is ERC721URIStorage {
     view
     returns (Image memory image)
   {
-    require(_exists(index), "index not exist");
+    require(exists(index), "index not exist");
     return imageStorage[index];
   }
 
@@ -90,7 +113,7 @@ contract ImageNFT is ERC721URIStorage {
     image.currentOwner = newOwner;
     image.transferTime += 1;
 
-    _transfer(ownerOf(_tokenID), newOwner, _tokenID);
+    // _transfer(ownerOf(_tokenID), newOwner, _tokenID);
     return true;
   }
 
@@ -106,16 +129,16 @@ contract ImageNFT is ERC721URIStorage {
     return false;
   }
 
-  function getTokenOnwer(uint256 _tokenID) external view returns (address) {
-    return ownerOf(_tokenID);
-  }
+  //   function getTokenOnwer(uint256 _tokenID) external view returns (address) {
+  //     return ownerOf(_tokenID);
+  //   }
 
   function getTokenURI(uint256 _tokenID) external view returns (string memory) {
     Image memory image = imageStorage[_tokenID];
     return image.tokenURI;
   }
 
-  function getOwnedNumber(address owner) external view returns (uint256) {
-    return balanceOf(owner);
-  }
+  //   function getOwnedNumber(address owner) external view returns (uint256) {
+  //     return balanceOf(owner);
+  //   }
 }
