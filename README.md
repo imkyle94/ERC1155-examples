@@ -1,5 +1,44 @@
 # ERC1155-examples
-ERC1155 사용 예제를 제공합니다.
+기업 협약 프로젝트에서 구현했던 ERC721 컨트랙트를 ERC1155 로 마이그레이션하며 알게된 내용과 그 예제를 작성합니다
+추가적으로, ERC 오픈 소스를 사용하며 참고하면 좋을 내용 역시 작성하였습니다.
+
+### ERC721 -> ERC1155
+0. ERC 공부하는 법
+-> openzeppelin Docs와 Github examples 를 동시에 보는 것을 추천합니다. 공식 문서에서 약간 모호한 내용들이 있습니다. 그 경우에 공식 깃허브에 적혀있는 컨트랙트를 보면 도움이 많이 될 것 입니다.
+[OpenZepplin ERC1155 API](https://docs.openzeppelin.com/contracts/4.x/api/token/erc1155)
+[OpenZepplin Contracts Githhub](https://github.com/OpenZeppelin/openzeppelin-contracts)
+
+1. ERC는 그게 코어 코드와 확장(Extension) 코드로 나뉘어져 있습니다. 성격에 맞게 메서드들이 구현되어 있는데, 본인이 작성할 컨텐츠에 맞게 각 코드를 적절히 취사선택하면 됩니다. 코드에 구조는 본인 입맛에 따라 다양하게 작성할 수 있습니다.
+
+2. Override
+-> 일반적으로는 하나의 컨트랙트를 상속하거나, 두 개의 컨트랙트를 동시에 상속하거나(ex. ERC1155, ERC1155URIStorage) 하는 경우입니다.
+-> 이 때, 상속시키는 부모 컨트랙트에 동일한 메서드가 존재할 경우, 이를 오버라이딩하는 행위가 필요합니다.
+-> 깃허브 코드에 이를 명시하고 있습니다.
+-> 예제에 구현되어 있습니다.
+-> ERC1155에서 실제로 오버라이딩한 메서드를 나열합니다.
+-> function _beforeTokenTransfer(
+    address operator,
+    address from,
+    address to,
+    uint256[] memory ids,
+    uint256[] memory amounts,
+    bytes memory data
+  ) internal virtual override(ERC1155, ERC1155Supply) {
+    super._beforeTokenTransfer(operator, from, to, ids, amounts, data);
+  }
+  
+->   function uri(uint256 tokenId)
+    public
+    view
+    virtual
+    override(ERC1155, ERC1155URIStorage)
+    returns (string memory)
+  {
+    // string memory tokenURI = _tokenURIs[tokenId];
+    // If token URI is set, concatenate base URI and tokenURI (via abi.encodePacked).
+    // return bytes(tokenURI).length > 0 ? string(abi.encodePacked(_baseURI, tokenURI)) : super.uri(tokenId);
+  }
+
 
 ###
 나의 경우 블록체인 코어 & 메인넷 개발자를 목표로 하고 있기 때문에(코인 발행에 당당히 내 이름을 넣고 싶다.)
