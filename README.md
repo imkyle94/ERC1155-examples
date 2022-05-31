@@ -8,10 +8,11 @@
 [OpenZepplin ERC1155 API](https://docs.openzeppelin.com/contracts/4.x/api/token/erc1155)
 [OpenZepplin Contracts Githhub](https://github.com/OpenZeppelin/openzeppelin-contracts)
 
-1. ERC는 그게 코어 코드와 확장(Extension) 코드로 나뉘어져 있습니다. 성격에 맞게 메서드들이 구현되어 있는데, 본인이 작성할 컨텐츠에 맞게 각 코드를 적절히 취사선택하면 됩니다. 코드에 구조는 본인 입맛에 따라 다양하게 작성할 수 있습니다.
+1. ERC는 크게 코어(Core) 코드와 확장(Extension) 코드로 나뉘어져 있습니다. 성격에 맞게 메서드들이 구현되어 있는데, 본인이 작성할 컨텐츠에 맞게 각 코드를 적절히 취사선택하면 됩니다. 코드의 구조는 본인 입맛에 따라 다양하게 작성할 수 있습니다.
 
 2. Override
 -> 일반적으로는 하나의 컨트랙트를 상속하거나, 두 개의 컨트랙트를 동시에 상속하거나(ex. ERC1155, ERC1155URIStorage) 하는 경우입니다.
+-> 다른 방법으로는 컨트랙트를 각자 운영하거나, 인스턴스를 내는 경우일텐데, 개인적으로 상속
 -> 이 때, 상속시키는 부모 컨트랙트에 동일한 메서드가 존재할 경우, 이를 오버라이딩하는 행위가 필요합니다.
 -> 깃허브 코드에 이를 명시하고 있습니다.
 -> 예제에 구현되어 있습니다.
