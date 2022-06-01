@@ -1,35 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "./NFTCollection.sol";
+import "./NFT.sol";
 
-contract NFTMarketplace {
-  uint256 public offerCount;
-  mapping(uint256 => _Offer) public offers;
-  mapping(address => uint256) public userFunds;
-  NFTCollection nftCollection;
-
-  struct _Offer {
-    uint256 offerId;
-    uint256 id;
-    address user;
-    uint256 price;
-    bool fulfilled;
-    bool cancelled;
-  }
-
-  event Offer(
-    uint256 offerId,
-    uint256 id,
-    address user,
-    uint256 price,
-    bool fulfilled,
-    bool cancelled
-  );
-
-  event OfferFilled(uint256 offerId, uint256 id, address newOwner);
-  event OfferCancelled(uint256 offerId, uint256 id, address owner);
-  event ClaimFunds(address user, uint256 amount);
+contract NFTBuy {
+  NFT nft;
 
   constructor(address _nftCollection) {
     nftCollection = NFTCollection(_nftCollection);

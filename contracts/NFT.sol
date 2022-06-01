@@ -27,9 +27,9 @@ contract NFT is ERC1155Supply, ERC1155URIStorage {
     string composer;
   }
 
-  enum Song {
-    name,
-    genre
+  struct Song {
+    string name;
+    string genre;
   }
 
   struct NaFT {
@@ -40,8 +40,8 @@ contract NFT is ERC1155Supply, ERC1155URIStorage {
     address currentOwner;
     uint256 transferTime;
     // Status status;
-    // Song song;
     SongParticipant songParticipant;
+    Song song;
   }
 
   constructor() ERC1155("NFT") {
@@ -74,9 +74,10 @@ contract NFT is ERC1155Supply, ERC1155URIStorage {
   // _tokenIdToTokenURI[_id] = _tokenURI; 등을 구현해야하나?
 
   function mint(
-    SongParticipant memory _A,
     string memory _name,
-    string memory _tokenURI
+    string memory _tokenURI,
+    SongParticipant memory _songParticipant,
+    Song memory _song
   ) internal {
     currentNFTCount++;
     require(!exists(currentNFTCount), "NFTID repeated.");
@@ -91,7 +92,8 @@ contract NFT is ERC1155Supply, ERC1155URIStorage {
       msg.sender,
       msg.sender,
       block.timestamp,
-      _A
+      _songParticipant,
+      _song
     );
 
     tokenURIExists[_tokenURI] = true;
